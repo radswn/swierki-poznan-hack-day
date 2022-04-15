@@ -1,0 +1,1 @@
+# swierki-poznan-hack-day
