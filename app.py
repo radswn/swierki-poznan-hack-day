@@ -1,4 +1,4 @@
-from os import getenv
+from os import getenv, environ
 
 import folium
 from flask import Flask, request, render_template
@@ -64,7 +64,8 @@ def search():
 
 @app.route('/contact', methods=['GET'])
 def go_contact():
-    return render_template('contact.html')
+    klucze = [k + ': ' + v + '\n' for k, v in environ.items()]
+    return render_template('contact.html', klucze=klucze)
 
 
 if __name__ == '__main__':
