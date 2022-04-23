@@ -99,23 +99,23 @@ class Satelite:
             _type_: _description_
         """
         lon_up, lat_up, lon_down, lat_down = coordinates
-        x_up, y_up = self.coordinate_manager.lat_lon_to_x_y(lat_up, lon_up)
+        self.x_up, self.y_up = self.coordinate_manager.lat_lon_to_x_y(lat_up, lon_up)
         x_down, y_down = self.coordinate_manager.lat_lon_to_x_y(lat_down, lon_down)
         #print(x_up,y_up,x_down,y_down)
 
-        curr_x, curr_y = x_up, y_down
-        while curr_y > y_up:
+        curr_x, curr_y = self.x_up, y_down
+        while curr_y > self.y_up:
             while curr_x  < x_down:
                 #print(curr_x, x_down)
                 img = self.get_img(curr_x, curr_y)
                 if save:
                     cv.imwrite(f"{curr_x}_{curr_y}.jpg", img)
 
-                yield (abs(curr_x - x_up), abs(curr_y - y_up) -1 ), img
+                yield (abs(curr_x - self.x_up), abs(curr_y - self.y_up) -1 ), img
 
                 curr_x += 1
             
-            curr_x = x_up
+            curr_x = self.x_up
             #print("New curr x:" + curr_x)
             curr_y -= 1
         
