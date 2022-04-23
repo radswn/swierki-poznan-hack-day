@@ -2,6 +2,7 @@ import numpy as np
 import requests
 import cv2 as cv
 import io
+from os import getenv
 
 class CoordinateManager:
     """Class that is able to change coordinates from longitude, lattitude to x y and vice versa
@@ -48,7 +49,7 @@ class CoordinateManager:
 
 
 class Satelite:
-    def __init__(self, accessToken, coordinate_manager: CoordinateManager, tilesetId='mapbox.satellite', zoom=16):
+    def __init__(self, coordinate_manager: CoordinateManager, tilesetId='mapbox.satellite', zoom=16):
         """Initialize Satelite which can yielf you satelite images
 
         Args:
@@ -56,7 +57,7 @@ class Satelite:
             tilesetId (string): dataset taken from the mapboxAPI. Default to mapbox.satellite
             zoom (int, optional): ZOMM ON SATELITE IMAGE. MUST BE BETWEEN 1 and 18. THE BIGGER VALUE THE CLOSER THE IMAGEIS. Defaults to 16.
         """
-        self.accessToken = accessToken
+        self.accessToken = getenv('SATELITE_API_KEY')
         self.coordinate_manager = coordinate_manager
         self.tilesetId = tilesetId
         self.zoom = zoom
@@ -110,8 +111,7 @@ class Satelite:
 
 if __name__ == "__main__":
     coordinate = CoordinateManager(zoom=16)
-    satelite = Satelite(accessToken = 'pk.eyJ1Ijoic2ViYXN0aWFuY2giLCJhIjoiY2wyOHVldzhyMGQxbzNybGc1NDVwazEwNSJ9.PjStIMIxWUiVb0-yWUc41A',
-                coordinate_manager= coordinate, zoom=coordinate.zoom)
+    satelite = Satelite(coordinate_manager= coordinate, zoom=coordinate.zoom)
     
 
     lattitude, longitude = 52.422846950454876, 16.9350192582299
