@@ -6,6 +6,7 @@ from flask import Flask, request, render_template
 from ImageAnalyzer.inference import baseline_inference, Inference
 from ImageAnalyzer.satellite import Satelite, CoordinateManager
 from here.hereApi import HereApi
+import webbrowser
 
 app = Flask(__name__)
 
@@ -40,6 +41,7 @@ def search_map(x, y):
     print("generating a map!")
 
     m.save('map.html')
+    webbrowser.open("map.html")
 
     return render_template('plots.html', search=user_search, location=location, z=heatmap)
 

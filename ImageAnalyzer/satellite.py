@@ -60,7 +60,7 @@ class Satelite:
             tilesetId (string): dataset taken from the mapboxAPI. Default to mapbox.satellite
             zoom (int, optional): ZOMM ON SATELITE IMAGE. MUST BE BETWEEN 1 and 18. THE BIGGER VALUE THE CLOSER THE IMAGEIS. Defaults to 16.
         """
-        self.accessToken = getenv('INPUT_SATELITE_API_KEY')
+        self.accessToken = getenv('SATELITE_API_KEY')
         print(self.accessToken)
         self.coordinate_manager = coordinate_manager
         self.tilesetId = tilesetId
