@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}SIA{% endblock %}
+{% block content %}
+<html>
+<body>
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="tags">
+  <script>
+      $( function() {
+        var availableTags = [
+            {% for city in cities %}
+                "{{city}}",
+            {% endfor %}
+        ];
+        $( "#tags" ).autocomplete({
+          source: availableTags
+        });
+      } );
+      </script>
+  <button class="btn btn-light my-sm-0" type="submit">Search</button>
+</body>
+</html>
+{% endblock %}
