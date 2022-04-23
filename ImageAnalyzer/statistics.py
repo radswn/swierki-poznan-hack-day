@@ -12,7 +12,7 @@ def normalized_green_level(img: np.ndarray, normalization_factor=1):
         normalization factor (float, optional): . Defaults to 0.5.
     """
 
-    if len(img.shape) != 1:
+    if len(img.shape) != 2:
         print("PROVIDE GRAYSCALE IMAGE")
 
     binarized_img = img > 40

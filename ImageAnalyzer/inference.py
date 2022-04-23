@@ -4,7 +4,7 @@ sys.path.append(".")
 import cv2 as cv
 import numpy as np
 from satellite import Satelite, CoordinateManager
-from here.hereApi import hereApi
+from here.hereApi import HereApi
 from statistics import normalized_green_level
 
 def baseline_inference(img):
@@ -37,32 +37,32 @@ class Inference:
     
     def infer_bounding_box(self, coordinates, save=False):
         heatmap = np.zeros(satelite.get_shape_of_heap_map(coordinates))
-
+        #print(satelite.get_shape_of_heap_map(coordinates))
         for coords, img in self.satelite.iterate_over_box(coordinates, save=False):
             inferenced_image = self.inference_function(img) #image returned from the model (image segmentation, bounding box etc)
+            #cv.imwrite("test.jpg",inferenced_image)
+            #print(inferenced_image.shape)
             statistic = self.statistic_function(inferenced_image)
             
-            
-
             curr_x, curr_y = coords
-            
+            #print(curr_y, curr_x)
             heatmap[curr_y, curr_x] = statistic
             #yield self.inference_function(img)
-        
+        #print(heatmap)
         return heatmap
             
 
 
 if __name__ == '__main__':
     coordinate = CoordinateManager(zoom=16)
-    satelite = Satelite(accessToken = 'pk.eyJ1Ijoic2ViYXN0aWFuY2giLCJhIjoiY2wyOHVldzhyMGQxbzNybGc1NDVwazEwNSJ9.PjStIMIxWUiVb0-yWUc41A',
-                coordinate_manager= coordinate, zoom=coordinate.zoom)
+    satelite = Satelite(coordinate_manager= coordinate, zoom=coordinate.zoom)
     inference = Inference(satelite, inference_function = baseline_inference)
 
-    here = hereApi()
-    coordinates = here.getData("Poznan, old market")[1]
-
-    print(inference.infer_bounding_box(coordinates))
+    here = HereApi()
+    coordinates = here.getData("Poznan malta")[1]
+    #print(coordinates)
+    inference.infer_bounding_box(coordinates)
+    #print(inference.infer_bounding_box(coordinates))
 
     # for i, img in enumerate(inference.infer_bounding_box(coordinates)):
     #     cv.imwrite(f"{i}.jpg", img)

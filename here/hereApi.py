@@ -16,7 +16,6 @@ class HereApi:
     
         center_latitude = data['items'][0]['position']['lat']
         center_longitude = data['items'][0]['position']['lng']
-        corners = tuple([data['items'][0]['mapView'][x] for x in self.directions])
         
         location_name = data['items'][0]['title']
         if 'mapView' in data['items'][0].keys():
@@ -29,6 +28,6 @@ class HereApi:
 
 
 if __name__ == '__main__':
-    here = hereApi()
+    here = HereApi()
     print(here.getData("Poznan, Piatkowo"))
 
