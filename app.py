@@ -1,5 +1,6 @@
-from flask import Flask, request, render_template, redirect
 from os import getenv
+
+from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
@@ -18,7 +19,6 @@ def search():
     user_search = request.form['sbar']  
        
     return render_template('plots.html', search=user_search)
-    # return f"<h1>{user_search}</h1>"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=getenv('PORT'))
