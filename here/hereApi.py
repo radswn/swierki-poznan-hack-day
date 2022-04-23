@@ -6,7 +6,7 @@ import requests
 
 class HereApi:
     def __init__(self) -> None:
-        self.apiKey = getenv("INPUT_HERE_API_KEY")
+        self.apiKey = getenv("HERE_API_KEY")
         self.URL = 'https://geocode.search.hereapi.com/v1/geocode'
         self.directions = ['west', 'north', 'east', 'south']
 
