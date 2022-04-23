@@ -1,6 +1,7 @@
 from os import getenv
 
 import folium
+import requests
 from flask import Flask, request, render_template
 
 from ImageAnalyzer.inference import baseline_inference, Inference
@@ -66,7 +67,11 @@ def search():
 
 @app.route('/contact', methods=['GET'])
 def go_contact():
-    return render_template('contact.html')
+    apiKey = getenv("HERE_API_KEY")
+    URL = 'https://geocode.search.hereapi.com/v1/geocode'
+    PARAMS = {'q': location, 'apiKey': apiKey}
+    r = requests.get(url=URL, params=PARAMS)
+    return render_template('contact.html', req=r.json(), params=PARAMS)
 
 
 if __name__ == '__main__':
