@@ -3,9 +3,9 @@ sys.path.append(".")
 
 import cv2 as cv
 import numpy as np
-from satellite import Satelite, CoordinateManager
+from ImageAnalyzer.satellite import Satelite, CoordinateManager
 from here.hereApi import HereApi
-from statistics import normalized_green_level
+from ImageAnalyzer.statistics import normalized_green_level
 
 def baseline_inference(img):
     #convert the BGR image to HSV colour space
@@ -36,7 +36,7 @@ class Inference:
 
     
     def infer_bounding_box(self, coordinates, save=False):
-        heatmap = np.zeros(satelite.get_shape_of_heap_map(coordinates))
+        heatmap = np.zeros(self.satelite.get_shape_of_heap_map(coordinates))
         #print(satelite.get_shape_of_heap_map(coordinates))
         for coords, img in self.satelite.iterate_over_box(coordinates, save=False):
             inferenced_image = self.inference_function(img) #image returned from the model (image segmentation, bounding box etc)

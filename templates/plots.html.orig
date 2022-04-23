@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}PLOTS FOR RESULT{% endblock %}
+{% block content %}
+<form action="#" method="get">
+    <p>{{search}}</p>
+</form>
+<<<<<<< HEAD
+=======
+<div id="tester">
+</div>
+
+<script>
+    TESTER = document.getElementById('tester');
+
+    Plotly.newPlot(TESTER, [{
+        z: JSON.parse("{{z}}") ,
+        colorscale: [
+            ['0.0', 'rgb(255, 0, 0)'],
+            ['0.111111111111', 'rgb(255, 40, 0)'],
+            ['0.222222222222', 'rgb(255, 80, 0)'],
+            ['0.333333333333', 'rgb(255, 120, 0)'],
+            ['0.444444444444', 'rgb(221, 255, 0)'],
+            ['0.555555555556', 'rgb(181,255,0)'],
+            ['0.666666666667', 'rgb(141,255,0)'],
+            ['0.777777777778', 'rgb(101,255,0)'],
+            ['0.888888888889', 'rgb(61,255,0)'],
+            ['1.0', 'rgb(21,255,0)']
+        ],
+        type: 'heatmap'
+    }], {
+        margin: { t: 0 }
+    });
+
+    TESTER.on('plotly_click', function (data) {
+        var x, y;
+        for (var i = 0; i < data.points.length; i++) {
+            x = data.points[i].x
+            y = data.points[i].y
+        }
+
+        window.location.replace("/search/" + x + "/" + y)
+        //alert('x: ' + x + " y: " + y );
+    });
+</script>
+>>>>>>> 9fb8ddb (adding interactive plot)
+{% endblock %}
