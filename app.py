@@ -69,7 +69,7 @@ def search():
 def go_contact():
     apiKey = getenv("HERE_API_KEY")
     URL = 'https://geocode.search.hereapi.com/v1/geocode'
-    PARAMS = {'q': location, 'apiKey': apiKey}
+    PARAMS = {'q': 'poznan malta', 'apiKey': apiKey}
     r = requests.get(url=URL, params=PARAMS)
     return render_template('contact.html', req=r.json(), params=PARAMS)
 
