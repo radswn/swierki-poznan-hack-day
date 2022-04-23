@@ -29,7 +29,7 @@ def home():
 def search_map(x, y):
     x, y = int(x) + satelite.x_up, int(y) + satelite.y_up
     print(x, y)
-    lat, lon = coordinate.x_y_to_lat_lon(x, y)
+    lat, lon = coordinate.x_y_to_lat_lon(x+1, y+1)
     print(lat, lon)
     m = folium.Map(
         location=[lat, lon],
