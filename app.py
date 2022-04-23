@@ -1,5 +1,6 @@
-from flask import Flask, request, render_template, redirect
 from os import getenv
+
+from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
