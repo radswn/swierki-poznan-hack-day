@@ -81,6 +81,13 @@ class Satelite:
 
         return img
 
+    def get_shape_of_heap_map(self,coordinates):
+        lon_up, lat_up, lon_down, lat_down = coordinates
+        x_up, y_up = self.coordinate_manager.lat_lon_to_x_y(lat_up, lon_up)
+        x_down, y_down = self.coordinate_manager.lat_lon_to_x_y(lat_down, lon_down)
+
+        return abs(y_up - y_down), abs(x_up - x_down)
+
     def iterate_over_box(self, coordinates, save=False):
         """Generator that iterates over boundaries of given terrain and returns images.
         Starting from bottom left corner (this is beneficial for the histogram creation)
@@ -93,19 +100,22 @@ class Satelite:
         lon_up, lat_up, lon_down, lat_down = coordinates
         x_up, y_up = self.coordinate_manager.lat_lon_to_x_y(lat_up, lon_up)
         x_down, y_down = self.coordinate_manager.lat_lon_to_x_y(lat_down, lon_down)
+        #print(x_up,y_up,x_down,y_down)
 
         curr_x, curr_y = x_up, y_down
         while curr_y > y_up:
-            while curr_x <= x_down:
+            while curr_x  < x_down:
+                #print(curr_x, x_down)
                 img = self.get_img(curr_x, curr_y)
                 if save:
                     cv.imwrite(f"{curr_x}_{curr_y}.jpg", img)
 
-                yield img
+                yield (abs(curr_x - x_up), abs(curr_y - y_up) -1 ), img
 
                 curr_x += 1
             
             curr_x = x_up
+            #print("New curr x:" + curr_x)
             curr_y -= 1
         
 
@@ -118,13 +128,13 @@ if __name__ == "__main__":
 
     x, y = coordinate.lat_lon_to_x_y(lattitude, longitude)
 
-    print(x,y)
+    #print(x,y)
 
     satelite.get_img(x,y, save=True)
 
     lattitude_, longitude_ = coordinate.x_y_to_lat_lon(x,y)
 
-    print(lattitude_, longitude_)
+    #print(lattitude_, longitude_)
     
     lattitude_up, longitude_up = 52.46434148470483, 16.889537555799283
     lattitude_down, longitude_down = 52.444256476893926, 16.927560551057564
