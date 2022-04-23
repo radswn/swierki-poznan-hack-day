@@ -64,9 +64,8 @@ def search():
 
 @app.route('/contact', methods=['GET'])
 def go_contact():
-    keys = getenv('HERE_API_KEY'), getenv('SATELITE_API_KEY')
-    print(f'keys: {keys}')
-    return render_template('contact.html')
+    key = getenv('HERE_API_KEY')
+    return render_template('contact.html', klucz=key)
 
 
 if __name__ == '__main__':
