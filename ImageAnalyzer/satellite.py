@@ -58,6 +58,7 @@ class Satelite:
             zoom (int, optional): ZOMM ON SATELITE IMAGE. MUST BE BETWEEN 1 and 18. THE BIGGER VALUE THE CLOSER THE IMAGEIS. Defaults to 16.
         """
         self.accessToken = getenv('SATELITE_API_KEY')
+        print(self.accessToken)
         self.coordinate_manager = coordinate_manager
         self.tilesetId = tilesetId
         self.zoom = zoom

@@ -1,18 +1,17 @@
 from os import getenv
-
+from here.hereApi import HereApi
+from ImageAnalyzer.satellite import Satelite, CoordinateManager
+from ImageAnalyzer.inference import baseline_inference, Inference
 from flask import Flask, request, render_template, redirect
 import folium
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
 heatmap = []
 user_search = ""
 location = ""
 coordinate = CoordinateManager(zoom=16)
 satelite = Satelite(coordinate_manager=coordinate, zoom=coordinate.zoom)
-=======
->>>>>>> parent of e32759c (resolve conflicts)
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -22,7 +21,6 @@ def home():
     return render_template("index.html", cities=cities)
 
 
-<<<<<<< HEAD
 @app.route('/search/<x>/<y>', methods=['GET'])
 def search_map(x, y):
     x,y = int(x) + satelite.x_up, int(y) + satelite.y_up
@@ -42,11 +40,11 @@ def search_map(x, y):
 
     return render_template('plots.html', search=user_search, location=location, z=heatmap)
 
-
-=======
->>>>>>> parent of e32759c (resolve conflicts)
 @app.route('/search', methods=['POST'])
 def search():
+    global heatmap
+    global location
+    global user_search
     user_search = request.form['sbar']  
     
     here = HereApi()
