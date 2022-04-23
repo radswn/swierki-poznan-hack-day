@@ -2,23 +2,34 @@
 {% block title %}SIA{% endblock %}
 {% block content %}
 <html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
+    </script>  
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
+    </script>  
+    
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+        rel="stylesheet" type="text/css" />  
+      </head>
 <body>
-  <form class="form-inline" action="{{ url_for('search') }}" method="post">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="tags" name="sbar">
+    <form class="form-inline justify-content-center" action="{{ url_for('search') }}" method="post">
+      <input class="form-control mr-sm-2" type="text" placeholder="Type here..." aria-label="Search" id="tags" name="sbar">
+      
       <script>
-          $( function() {
-            var availableTags = [
-                {% for city in cities %}
-                    "{{city}}",
-                {% endfor %}
-            ];
-            $( "#tags" ).autocomplete({
-              source: availableTags
-            });
-          } );
-          </script>
-    <button class="btn btn-light my-sm-0" type="submit">Search</button>
+        $( function() {
+          var availableTags = [
+          {% for city in cities %}
+          "{{cities}}",
+          {% endfor %}
+          ];
+          $( "#tags" ).autocomplete({
+            source: availableTags
+          });
+        } );
+      </script>
+    <button class="btn btn-dark my-sm-0" type="submit">Search</button>
   </form>
-  </body>
+</body>
 </html>
 {% endblock %}
