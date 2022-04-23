@@ -1,5 +1,6 @@
-import numpy as np
 import cv2 as cv
+import numpy as np
+
 
 def normalized_green_level(img: np.ndarray, normalization_factor=1):
     """Function calculating level of vegetation level in range of [0,1]
@@ -19,9 +20,9 @@ def normalized_green_level(img: np.ndarray, normalization_factor=1):
     cv.imwrite("binarized.jpg", binarized_img * 255)
     area = binarized_img.shape[0] * binarized_img.shape[1]
 
-    #print(np.sum(binarized_img))
-    #print(area)
-    return np.sum(binarized_img) / (area*normalization_factor)
+    # print(np.sum(binarized_img))
+    # print(area)
+    return np.sum(binarized_img) / (area * normalization_factor)
 
 
 if __name__ == "__main__":
