@@ -10,9 +10,9 @@ class HereApi:
         self.URL = 'https://geocode.search.hereapi.com/v1/geocode'
         self.directions = ['west', 'north', 'east', 'south']
 
-    def getData(self, location) -> Tuple:
-        PARAMS = {'q': location, 'apiKey': self.apiKey}
-        r = requests.get(url=self.URL, params=PARAMS)
+    def get_data(self, location) -> Tuple:
+        params = {'q': location, 'apiKey': self.apiKey}
+        r = requests.get(url=self.URL, params=params)
         data = r.json()
 
         center_latitude = data['items'][0]['position']['lat']
@@ -30,4 +30,4 @@ class HereApi:
 
 if __name__ == '__main__':
     here = HereApi()
-    print(here.getData("Poznan, Piatkowo"))
+    print(here.get_data("Poznan, Piatkowo"))

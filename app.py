@@ -3,9 +3,9 @@ from os import getenv
 import folium
 from flask import Flask, request, render_template
 
-from ImageAnalyzer.inference import baseline_inference, Inference
-from ImageAnalyzer.satellite import Satelite, CoordinateManager
-from here.hereApi import HereApi
+from image_analyzer.inference import baseline_inference, Inference
+from image_analyzer.satellite import Satellite, CoordinateManager
+from here.here_api import HereApi
 import webbrowser
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ heatmap = []
 user_search = ""
 location = ""
 coordinate = CoordinateManager(zoom=16)
-satelite = Satelite(coordinate_manager=coordinate, zoom=coordinate.zoom)
+satellite = Satellite(coordinate_manager=coordinate, zoom=coordinate.zoom)
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -27,15 +27,15 @@ def home():
 
 @app.route('/search/<x>/<y>', methods=['GET'])
 def search_map(x, y):
-    x, y = int(x) + satelite.x_up, int(y) + satelite.y_up
+    x, y = int(x) + satellite.x_up, int(y) + satellite.y_up
     print(x, y)
     lat, lon = coordinate.x_y_to_lat_lon(x+1, y+1)
     print(lat, lon)
     m = folium.Map(
         location=[lat, lon],
         zoom_start=30,
-        tiles='https://api.tiles.mapbox.com/v4/' + satelite.tilesetId +
-              '/{z}/{x}/{y}.png?access_token=' + satelite.accessToken,
+        tiles='https://api.tiles.mapbox.com/v4/' + satellite.tile_set_id +
+              '/{z}/{x}/{y}.png?access_token=' + satellite.accessToken,
         attr='mapbox.com')
 
     print("generating a map!")
@@ -54,9 +54,9 @@ def search():
     user_search = request.form['sbar']
 
     here = HereApi()
-    location, coords = here.getData(location=user_search)
+    location, coords = here.get_data(location=user_search)
 
-    inference = Inference(satelite=satelite, inference_function=baseline_inference)
+    inference = Inference(satellite=satellite, inference_function=baseline_inference)
 
     heatmap = inference.infer_bounding_box(coordinates=coords)
     heatmap = [list(x) for x in heatmap]
